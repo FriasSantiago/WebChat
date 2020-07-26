@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="d">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>WebChat</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-7 messages-container">
+                <div class="messages">
+                    <div class="message">
+                        <small>Nombre <span>00:00</span></small>
+                        <hr>
+                        <p>Hola Mundo!</p>
+                    </div>
+
+                    <div class="message">
+                        <small>Nombre <span>00:00</span></small>
+                        <hr>
+                        <p>Hola Mundo!</p>
+                    </div>
+
+                </div>
+
+                <div class="row msg-form-container">
+                    <form action="" class="col-12 msg-form align-self-center">
+                    
+                        <div class="input-group">
+                            <input type="text" placeholder="Type something..." class="msg form-control">
+                            <input type="submit" class="btn btn-light ml-2" value="Send">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
+            <div class="col-3 sidebar">
+
+                <h2 class="room-name">Room Name</h2>
+
+                <ul class="users-list">
+                    <!-- <li>Santi</li>
+                    <li>Mike</li>
+                    <li>Luke</li>
+                    <li>Erik</li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+.container {
+    background-color: rebeccapurple;
+    position: relative;
+    top: 10vh;
+    min-height: 65vh;
+}
+
+.messages-container {
+    background-color: rgba(83, 83, 160, 0.863);
+    min-height: 65vh;
+}
+
+.sidebar {
+    background-color: rgb(134, 134, 226);
+    min-height: 65vh;
+}
+
+.messages {
+    list-style: none;
+    max-height: 60vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#style-2::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.messages::-webkit-scrollbar
+{
+    width: 12px;
+	background-color: #F5F5F5;
+}
+
+.messages::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #4d4d4d;
+}
+
+.message {
+    background-color: lightgreen;
+    padding: 10px;
+    margin: 12px;
+}
+
+.room-name {
+    text-align: center;
+}
+
+.users-list {
+    list-style: none;
+}
+
+.msg-form-container {
+    background-color: rgb(162, 128, 240);
+    padding: 10px;
+}
