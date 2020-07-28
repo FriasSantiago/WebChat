@@ -37,12 +37,14 @@ socket.on("message", ({ sender, msg, isPrivate, moment }) => {
                 <p>${msg}</p>
             </div>`
         );
-    }    
+    }
+    scrollBottom();    
 });
 
 // Displays when a user connects/disconnects
 socket.on("userAction", msg => {
     $(".messages").append(`<p class=user-action>${msg}</p>`);
+    scrollBottom(); 
 });
 
 // Get form input
@@ -63,6 +65,9 @@ $(".msg-form").on("submit", e => {
     $(".msg").val(""); 
 });
 
-$(".send-btn").on("click", () => {
-    $(".messages").scrollTop();         // FIXME this shoul scroll to the bottom
-});                                     // each time a message is received
+// FIXME this shoul scroll to the bottom
+// each time a message is received
+const scrollBottom = () => {
+    const msgs = $(".messages");
+    msgs.scrollTop(msgs.prop("scrollHeight")) ;    
+};                  
