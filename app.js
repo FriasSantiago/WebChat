@@ -10,26 +10,27 @@ const io = socketio(server);
 
 const PORT = process.env.PORT || 3000;
 
-// Configura los archivos estaticos
+// Use static files
 app.use(express.static(__dirname + "/public"));
 
-// Ejecuta cuando se conecta un usuario
+// Initializes socket
 io.on('connect', socket => {
 
-    // Agrega el usuario a la sala
+    // Add user to room
     socket.on("joinRoom", ({ username, room }) => {
+        // TODO check if username is taken
         const user = addUser(socket.id, username, room);
         socket.join(user.room);
         socket.to(user.room).broadcast.emit("userAction", user.username + " has joined!");
 
-        // Update a la lista de usuarios
+        // Update users list and send it back to the client
         io.to(user.room).emit("roomClients", {
             clients: getUsersInRoom(user.room),
             room: user.room
         });
     });
 
-    // Cuando se recibe un mensaje del usuario
+    // Get user message
     socket.on("message", msg => {
         const user = getUserById(socket.id);
         if (user) {
@@ -41,6 +42,7 @@ io.on('connect', socket => {
         }
     });
 
+    // Get private message
     socket.on("privateMessage", ({ to, msg }) => {
         const sender = getUserById(socket.id);
         const receiver = getUserByName(to, sender.room);
@@ -60,7 +62,7 @@ io.on('connect', socket => {
         }
     });
 
-    // Ejecuta cuando el usuario se desconecta
+    // When user disconnects
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);
         if (user) {
@@ -70,7 +72,7 @@ io.on('connect', socket => {
     });
 });
 
-// Inicializa el servidor
+// Run server
 server.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}...`);
 });

@@ -1,7 +1,7 @@
 const users = [];
 
 function addUser(id, username, room) {
-    
+        
     const user = { id, username, room };
     users.push(user);
 

@@ -1,11 +1,14 @@
 const socket = io();
 
+// Get URL parameters for username and room
 const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true
 });
 
+// Join user to the room selected
 socket.emit("joinRoom", { username, room });
 
+// Displays current room name and clients
 socket.on("roomClients", ({ clients, room }) => {
     
     $(".room-name").html(room);
@@ -16,6 +19,7 @@ socket.on("roomClients", ({ clients, room }) => {
     }
 });
 
+// Display messages sent/received
 socket.on("message", ({ sender, msg, isPrivate, moment }) => {
     if (sender === username) {
         $(".messages").append(
@@ -36,17 +40,20 @@ socket.on("message", ({ sender, msg, isPrivate, moment }) => {
     }    
 });
 
+// Displays when a user connects/disconnects
 socket.on("userAction", msg => {
     $(".messages").append(`<p class=user-action>${msg}</p>`);
 });
 
+// Get form input
 $(".msg-form").on("submit", e => {
     e.preventDefault();
     
     let msg = $(".msg").val();
     const regex = /\/[^\s].*/;
 
-    if (regex.test(msg)) {
+    // TODO validate message
+    if (regex.test(msg)) {  // Checks if the message is private
         let to = $(".msg").val().slice(1, msg.indexOf(" "));
         msg = $(".msg").val().slice(msg.indexOf(" "), msg.length);
         socket.emit("privateMessage", {to, msg});
@@ -57,5 +64,5 @@ $(".msg-form").on("submit", e => {
 });
 
 $(".send-btn").on("click", () => {
-    $(".messages").scrollTop();         //FIXME
-});
+    $(".messages").scrollTop();         // FIXME this shoul scroll to the bottom
+});                                     // each time a message is received
