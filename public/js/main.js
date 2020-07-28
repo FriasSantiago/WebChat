@@ -16,36 +16,28 @@ socket.on("roomClients", ({ clients, room }) => {
     }
 });
 
-socket.on("message", ({ sender, msg, isPrivate }) => {
-    if (sender === username && isPrivate) {
-        $(".messages").append(` <div class="message">
-                                    <small>${sender} <span>00:00</span> (Private)</small>
-                                    <hr>
-                                    <p>${msg}</p>
-                                </div>`);
-    } else if (isPrivate) {
-        $(".messages").append(` <div class="message">
-                                    <small>${sender} <span>00:00</span> (Private)</small>
-                                    <hr>
-                                    <p>${msg}</p>
-                                </div>`);
-    } else if (sender === username) {
-        $(".messages").append(` <div class="message">
-                                    <small>You <span>00:00</span></small>
-                                    <hr>
-                                    <p>${msg}</p>
-                                </div>`);
-    } else {    
-        $(".messages").append(` <div class="message">
-                                    <small>${sender} <span>00:00</span></small>
-                                    <hr>
-                                    <p>${msg}</p>
-                                </div>`);
-    };
+socket.on("message", ({ sender, msg, isPrivate, moment }) => {
+    if (sender === username) {
+        $(".messages").append(
+            `<div class="message">
+                <small>You: <span>${moment}</span> ${isPrivate ? "(Private)" : ""}</small>
+                <hr>
+                <p>${msg}</p>
+            </div>`
+        );
+    } else {
+        $(".messages").append(
+            `<div class="message">
+                <small>${sender} <span>${moment}</span> ${isPrivate ? "(Private)" : ""}</small>
+                <hr>
+                <p>${msg}</p>
+            </div>`
+        );
+    }    
 });
 
 socket.on("userAction", msg => {
-    $(".messages").append(`<p>${msg}</p>`);
+    $(".messages").append(`<p class=user-action>${msg}</p>`);
 });
 
 $(".msg-form").on("submit", e => {
@@ -59,8 +51,11 @@ $(".msg-form").on("submit", e => {
         msg = $(".msg").val().slice(msg.indexOf(" "), msg.length);
         socket.emit("privateMessage", {to, msg});
     } else {
-        socket.emit("message",  msg);
+        socket.emit("message", msg);
     }
     $(".msg").val(""); 
 });
 
+$(".send-btn").on("click", () => {
+    $(".messages").scrollTop();         //FIXME
+});

@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const { addUser, removeUser, getUserById, getUsersInRoom, getUserByName } = require('./utils/users');
-const { send } = require('process');
+const { formatMessage } = require('./utils/messages');
 
 const app = express();
 const server = http.createServer(app);
@@ -33,7 +33,11 @@ io.on('connect', socket => {
     socket.on("message", msg => {
         const user = getUserById(socket.id);
         if (user) {
-            io.in(user.room).emit("message", { sender: user.username, msg, isPrivate: false });
+            io.in(user.room).emit("message", formatMessage({
+                sender: user.username,
+                msg,
+                isPrivate: false 
+            }));
         }
     });
 
@@ -42,17 +46,17 @@ io.on('connect', socket => {
         const receiver = getUserByName(to, sender.room);
 
         if (receiver) {
-            io.to(receiver.id).to(sender.id).emit("message", {
-                msg,
-                sender: sender.username,
-                isPrivate: true
-            });
+            io.to(receiver.id).to(sender.id).emit("message", formatMessage({
+                    sender: sender.username,    
+                    msg, 
+                    isPrivate: true
+                }));
         } else {
-            socket.emit("message", {
-                msg: "User not found!",
+            socket.emit("message", formatMessage({
                 sender: "AppBot",
+                msg: "User not found!",
                 isPrivate: true
-            })
+            }));
         }
     });
 

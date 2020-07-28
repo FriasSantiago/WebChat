@@ -12,10 +12,10 @@
 
 <body>
 
-    <div class="container">
-        <div class="row justify-content-center">
+    <div class="container-fluid">
+        <div class="row">
 
-            <div class="col-7 messages-container">
+            <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 messages-container">
                 <div class="messages">
                     <div class="message">
                         <small>Nombre <span>00:00</span></small>
@@ -36,7 +36,7 @@
                     
                         <div class="input-group">
                             <input type="text" placeholder="Type something..." class="msg form-control">
-                            <input type="submit" class="btn btn-light ml-2" value="Send">
+                            <input type="submit" class="btn btn-light ml-2 send-btn" value="Send">
                         </div>
                     </form>
                 </div>
@@ -44,7 +44,7 @@
             </div>
 
 
-            <div class="col-3 sidebar">
+            <div class="col-md-3 col-lg-3 col-xl-3 sidebar">
 
                 <h2 class="room-name">Room Name</h2>
 
@@ -60,9 +60,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
