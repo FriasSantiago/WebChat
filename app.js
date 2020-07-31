@@ -1,8 +1,11 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+const bodyParser = require('body-parser');
 const { addUser, removeUser, getUserById, getUsersInRoom, getUserByName } = require('./utils/users');
 const { formatMessage } = require('./utils/messages');
+const { addRoom, findRoom, hasSpace } = require('./utils/rooms');
+const chat = require('./routes/chat');
 
 const app = express();
 const server = http.createServer(app);
@@ -11,7 +14,11 @@ const io = socketio(server);
 const PORT = process.env.PORT || 3000;
 
 // Use static files
-app.use(express.static(__dirname + "/public"));
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(__dirname + "/views"));
+app.use('/', chat);
 
 // Initializes socket
 io.on('connect', socket => {
@@ -20,14 +27,25 @@ io.on('connect', socket => {
     socket.on("joinRoom", ({ username, room }) => {
         // TODO check if username is taken
         const user = addUser(socket.id, username, room);
-        socket.join(user.room);
-        socket.to(user.room).broadcast.emit("userAction", user.username + " has joined!");
+        const existingRoom = findRoom(user.room);
 
-        // Update users list and send it back to the client
-        io.to(user.room).emit("roomClients", {
-            clients: getUsersInRoom(user.room),
-            room: user.room
-        });
+        if (existingRoom) {
+            if (hasSpace(existingRoom.name, getUsersInRoom(existingRoom.name).length)) {
+                socket.join(user.room);
+                socket.to(user.room).broadcast.emit("userAction", user.username + " has joined!");   
+                
+                // Update users list and send it back to the client
+                io.to(user.room).emit("roomClients", {
+                    clients: getUsersInRoom(user.room),
+                    room: user.room
+                });
+            } else {
+                // TODO return error: max capacity reached 
+            }
+    
+        } else {
+            // TODO ask user if wants to create new room
+        }
     });
 
     // Get user message

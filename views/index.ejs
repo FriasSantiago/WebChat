@@ -8,8 +8,12 @@
 <body>
     <h1>Welcome!</h1>
 
+    <% if (error) { %>
+      <small>Error!</small>
+    <% } %>
+
     <div class="container">
-      <form action="chat.html">
+      <form action="/chat">
         <input type="text" id="username" name="username">
         <input type="text" id="room" name="room">
         <input type="submit" value="Join">

@@ -65,8 +65,6 @@ $(".msg-form").on("submit", e => {
     $(".msg").val(""); 
 });
 
-// FIXME this shoul scroll to the bottom
-// each time a message is received
 const scrollBottom = () => {
     const msgs = $(".messages");
     msgs.scrollTop(msgs.prop("scrollHeight")) ;    
